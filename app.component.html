@@ -1,0 +1,180 @@
+<div class="control-section">
+  <div class="pageBtn">
+    <span *ngIf="scrollable?.scrollLeft !== 0">
+      <button (click)="scrollBack()"><</button>
+    </span>
+    <span>
+      <button (click)="scroll()">></button>
+    </span>
+  </div>
+  <ejs-grid
+    #grid
+    [dataSource]="siteList"
+    [filterSettings]="filterSettings"
+    [pageSettings]="pageSettings"
+    [allowPaging]="true"
+    [allowSorting]="true"
+  >
+    <e-columns>
+      <!-- Site Name -->
+      <e-column
+        field="siteName"
+        headerText="Site Name"
+        width="150"
+        [isFrozen]="true"
+      ></e-column>
+
+      <!-- Site Owner -->
+      <e-column
+        field="siteOwner"
+        headerText="Site Owner"
+        width="100"
+      ></e-column>
+
+      <!-- Site Operator -->
+      <e-column
+        field="siteOperator"
+        headerText="Site Operator"
+        width="120"
+      ></e-column>
+
+      <!-- Product with colored background -->
+      <e-column field="product" headerText="Product" width="100">
+        <ng-template #template let-data>
+          <span
+            class="product-badge"
+            style="padding: 6px 5px !important; border-radius: 2px;"
+            [style.background-color]="data.productBackGroundColor"
+            [style.color]="data.productFontColor"
+          >
+            {{ data.product }}
+          </span>
+        </ng-template>
+      </e-column>
+
+      <!-- Utilities with colored badges -->
+      <e-column field="utilities" headerText="Utilities" width="300">
+        <ng-template #template let-data>
+          <div class="utilities-container">
+            <span
+              *ngFor="let utility of data.utilities"
+              class="utility-badge gap-2"
+              style="padding: 6px 5px !important; border-radius: 2px;"
+              [style.background-color]="utility.utilityBackGroundColor"
+              [style.color]="utility.utilityFontColor"
+            >
+              {{ utility.utilityName }}
+            </span>
+          </div>
+        </ng-template>
+      </e-column>
+
+      <!-- Technical Service Engineer -->
+      <e-column
+        field="technicalServiceEngineer"
+        headerText="TSE"
+        width="120"
+      ></e-column>
+
+      <!-- Customer Success Manager -->
+      <e-column
+        field="customerSuccessManager"
+        headerText="CSM"
+        width="120"
+      ></e-column>
+
+      <!-- Setting Completed Status -->
+      <e-column field="isSettingCompleted" headerText="Status" width="100">
+        <ng-template #template let-data>
+          <span
+            class="status-badge"
+            [class.completed]="data.isSettingCompleted"
+            [class.pending]="!data.isSettingCompleted"
+          >
+            {{ data.isSettingCompleted ? 'Completed' : 'Pending' }}
+          </span>
+        </ng-template>
+      </e-column>
+    </e-columns>
+  </ejs-grid>
+</div>
+
+<style>
+
+  .pageBtn{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+    .e-grid .e-movablescrollbar {
+        -ms-flex: 1;
+        overflow: hidden;
+        overflow-x: hidden;
+    }
+
+
+      .product-badge {
+        padding: 6px 5px !important;
+        border-radius: 2px;
+      }
+
+      .utility-badge {
+        display: inline-block;
+        padding: 2px 6px;
+        margin: 2px;
+        border-radius: 3px;
+        font-size: 10px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .utilities-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+      }
+
+      .status-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .status-badge.completed {
+        background-color: #28a745;
+        color: white;
+      }
+
+      .status-badge.pending {
+        background-color: #ffc107;
+        color: #212529;
+      }
+
+      .btn {
+        padding: 2px 8px;
+        font-size: 11px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        color: white;
+      }
+
+      .btn-danger {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      .btn:hover {
+        opacity: 0.8;
+      }
+
+      .me-1 {
+        margin-right: 4px;
+      }
+</style>
